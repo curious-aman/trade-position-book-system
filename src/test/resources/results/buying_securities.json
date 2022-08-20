@@ -1,0 +1,53 @@
+{
+  "Positions": [
+    {
+      "Account": "ACC1",
+      "Security": "SEC1",
+      "Quantity": 32,
+      "Events": [
+        {
+          "ID": 3,
+          "Action": "BUY",
+          "Account": "ACC1",
+          "Security": "SEC1",
+          "Quantity": 12
+        },
+        {
+          "ID": 6,
+          "Action": "BUY",
+          "Account": "ACC1",
+          "Security": "SEC1",
+          "Quantity": 20
+        }
+      ]
+    },
+    {
+      "Account": "ACC1",
+      "Security": "SECXYZ",
+      "Quantity": 50,
+      "Events": [
+        {
+          "ID": 4,
+          "Action": "BUY",
+          "Account": "ACC1",
+          "Security": "SECXYZ",
+          "Quantity": 50
+        }
+      ]
+    },
+    {
+      "Account": "ACC2",
+      "Security": "SECXYZ",
+      "Quantity": 33,
+      "Events": [
+        {
+          "ID": 5,
+          "Action": "BUY",
+          "Account": "ACC2",
+          "Security": "SECXYZ",
+          "Quantity": 33
+        }
+      ]
+    }
+  ]
+}

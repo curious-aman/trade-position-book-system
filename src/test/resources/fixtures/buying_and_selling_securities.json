@@ -1,0 +1,16 @@
+{
+  "Events": [
+    {
+      "ID": 7,
+      "Action": "BUY",
+      "Account": "ACC1",
+      "Security": "SEC1",
+      "Quantity": 100
+    }, {
+      "ID": 8,
+      "Action": "SELL",
+      "Account": "ACC1",
+      "Security": "SEC1",
+      "Quantity": 50
+    } ]
+}
