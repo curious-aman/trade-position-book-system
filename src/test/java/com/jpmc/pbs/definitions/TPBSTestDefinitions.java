@@ -24,6 +24,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class TPBSTestDefinitions extends TPBSIntegrationTest {
   ResponseEntity<TradePositions> responseEntity;
+  ResponseEntity<Position> responsePositionEntity;
   ResponseEntity<Object> responseEntityObject;
   TPBSApiError tPBSApiError;
   String url = DEFAULT_URL;
@@ -31,7 +32,7 @@ public class TPBSTestDefinitions extends TPBSIntegrationTest {
   @Autowired private Map<String, Position> positionsDataMap;
 
   @When("^I set http body with file (.*)$")
-  public void sendRequest(String filePath) throws IOException {
+  public void sendPostRequest(String filePath) throws IOException {
     headers.setContentType(MediaType.APPLICATION_JSON);
     String body =
         StreamUtils.copyToString(
@@ -39,6 +40,18 @@ public class TPBSTestDefinitions extends TPBSIntegrationTest {
     HttpEntity<String> request = new HttpEntity<>(body, headers);
     responseEntity =
         restTemplate.postForEntity(url + "/api/v1/events", request, TradePositions.class);
+  }
+
+  @When("^Get Position details using (.*)$")
+  public void sendGetRequest(String resource) {
+    try{
+    responsePositionEntity =
+        restTemplate.getForEntity(
+            url + "/api/v1/position" + resource, Position.class);
+    }catch (HttpClientErrorException e){
+      int statusCode = e.getRawStatusCode();
+      responsePositionEntity = ResponseEntity.status(HttpStatus.valueOf(statusCode)).build();
+    }
   }
 
   @When("^I set http body with invalid json (.*)$")
@@ -56,7 +69,11 @@ public class TPBSTestDefinitions extends TPBSIntegrationTest {
 
   @Then("^http response code should be (\\d+)$")
   public void responseCode(String status) {
-    this.checkStatus(status, false);
+  }
+
+  @Then("^Position http response code should be (\\d+)$")
+  public void positionResponseCode(String status) {
+    this.checkPositionStatus(status, false);
   }
 
   @Then("^Invalid http response code should be (\\d+)$")
@@ -77,6 +94,14 @@ public class TPBSTestDefinitions extends TPBSIntegrationTest {
     assertThatJson(body).when(Option.IGNORING_ARRAY_ORDER).isEqualTo(responseEntity.getBody());
   }
 
+  @Then("^Position Response is same to output in file (.*)$")
+  public void positionResponseValue(String filePath) throws IOException {
+    String body =
+            StreamUtils.copyToString(
+                    getClass().getClassLoader().getResourceAsStream(filePath), StandardCharsets.UTF_8);
+    assertThatJson(body).when(Option.IGNORING_ARRAY_ORDER).isEqualTo(responsePositionEntity.getBody());
+  }
+
   @After
   public void afterScenario() {
     positionsDataMap.clear();
@@ -90,6 +115,17 @@ public class TPBSTestDefinitions extends TPBSIntegrationTest {
       assertThat(responseEntity.getStatusCodeValue()).isNotEqualTo(sanitizedStatus);
     } else {
       assertThat(responseEntity.getStatusCodeValue()).isEqualTo(sanitizedStatus);
+    }
+  }
+
+  void checkPositionStatus(String status, boolean isNot) {
+    int sanitizedStatus = Integer.parseInt(status);
+    assertThat(sanitizedStatus).isPositive();
+
+    if (isNot) {
+      assertThat(responsePositionEntity.getStatusCodeValue()).isNotEqualTo(sanitizedStatus);
+    } else {
+      assertThat(responsePositionEntity.getStatusCodeValue()).isEqualTo(sanitizedStatus);
     }
   }
 

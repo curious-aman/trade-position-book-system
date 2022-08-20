@@ -31,6 +31,11 @@ public class EventController {
   @GetMapping(path = "v1/position/{account}/{security}", produces = "application/json")
   public ResponseEntity<Position> getPositionBySecurityAndAccount(
       @PathVariable String account, @PathVariable String security) {
-    return ResponseEntity.ok(eventService.getPositionBySecurityAndAccount(security, account));
+    Position position = eventService.getPositionBySecurityAndAccount(security, account);
+    if (position != null) {
+      return ResponseEntity.ok(eventService.getPositionBySecurityAndAccount(security, account));
+    }else{
+      return ResponseEntity.notFound().build();
+    }
   }
 }
