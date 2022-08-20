@@ -6,6 +6,7 @@ import com.jpmc.pbs.enums.Action;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 
@@ -20,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class PositionProcessorTest {
   List<Event> eventList;
-
+  @Autowired private Map<String, Position> positionsDataMap;
   @Autowired PositionProcessor positionProcessor;
 
   @Before
@@ -49,6 +51,7 @@ public class PositionProcessorTest {
   @After
   public void after() {
     eventList.clear();
+    positionsDataMap.clear();
   }
 
   @Test
