@@ -55,6 +55,13 @@ public class PositionProcessorTest {
   }
 
   @Test
+  public void testProcessEventWithWIthNullValue() {
+    positionProcessor.processEvent(null);
+    List<Position> result = positionProcessor.getPositions();
+    assertTrue(result != null && result.isEmpty());
+  }
+
+  @Test
   public void testProcessEventWithWIthEmptyList() {
     List<Event> eventListInner = new ArrayList<>();
     positionProcessor.processEvent(eventListInner);
