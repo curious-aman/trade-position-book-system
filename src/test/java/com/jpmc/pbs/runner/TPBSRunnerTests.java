@@ -7,6 +7,6 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(
     features = {"src/test/resources/features"},
-    plugin = {"pretty", "html:reports/cucumber-report.html"},
+    plugin = {"pretty", "html:docs/index.html"},
     glue= {"com.jpmc.pbs.definitions"})
 public class TPBSRunnerTests {}

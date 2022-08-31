@@ -7,7 +7,7 @@ Trade Position Book system that can process trade events, and from which a user 
 [Trade Position Booking API](http://localhost:8080/swagger-ui/index.html#/)
 
 # Test report
-[Integration Tests](./reports/cucumber-report.html)
+[Integration Tests](docs/index.html)
 
 ```html
   _____            _       ___        _ _   _            ___           _   _             ___         _             
